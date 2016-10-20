@@ -4,28 +4,30 @@ var SWITCH_BUTTON_INFO = {
 }
 
 var SwitchButtonOff = function (button, option) {
-    var text = option.text || "处理中...";//按钮显示的内容
-
-    SetButtonText(button, text);
+    var text = option.text || "处理中...",//按钮显示的内容
+        timeout = option.timeout || 5000;//过期时间
 
     SWITCH_BUTTON_INFO.CLICK_FUN = GetButtonClickFun(button);
 
     SWITCH_BUTTON_INFO.TEXT = GetButtonText(button);
 
+    SetButtonText(button, text);
+
     ClearButtonClickFun(button);
+
+    setTimeout(function () { SetButtonToNormal(button); }, timeout);
 };
 
 var SwitchButtonOn = function (button, option) {
-    var text = option.text || "处理成功",//按钮显示的内容
-        timeout = option.timeout || 1000,//过度时间
+    var timeout = option.timeout || 1000,//过度时间
         timeoutText = option.timeoutText || "处理成功";//过度期间显示的文本
 
     SetButtonText(button, timeoutText);
 
-    setTimeout(function () { SetButtonToNormal(button, text); }, timeout);
+    setTimeout(function () { SetButtonToNormal(button); }, timeout);
 };
 
-var SetButtonToNormal = function (button, text) {
+var SetButtonToNormal = function (button) {
     SetButtonText(button, SWITCH_BUTTON_INFO.TEXT);
     SetButtonClickFun(button, SWITCH_BUTTON_INFO.CLICK_FUN);
 };
